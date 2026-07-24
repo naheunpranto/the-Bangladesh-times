@@ -1,36 +1,10 @@
-import LeftSidebar from "@/components/Homepage/news/LeftSidebar";
-import RightSidebar from "@/components/Homepage/news/RightSidebar";
+import { redirect } from "next/navigation";
 
- 
+const default_category_id = "01";
 
-
-async function getCategories ()  {
-  const res = await fetch("https://openapi.programming-hero.com/api/news/categories")
-  const data = await res.json();
-  return data.data;
-}
-
-
-
-export default async function Home() {
-
-  const categories = await getCategories()
-  console.log(categories.news_category, "categories");
+export default async function Home() { 
 
   return (
-    <div className="grid grid-cols-12 gap-4 container mx-auto my-[60px]">
-      <div className=" col-span-3">
-        <LeftSidebar categories={categories} activeId={null}/>
-      </div>
-
-      <div className="font-bold text-3xl bg-purple-500 col-span-6">
-        Dragon News
-      </div>
-
-      <div className="col-span-3">
-        <RightSidebar/>
-      </div>
-
-    </div>
+    redirect(`/category/${default_category_id}`)
   );
 }

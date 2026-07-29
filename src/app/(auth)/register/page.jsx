@@ -1,4 +1,5 @@
 "use client";
+import { authClient } from "@/lib/auth-client";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 
@@ -10,13 +11,31 @@ const RegisterPage = () => {
     formState: { errors },
   } = useForm();
 
-  const handleRegisterFunc = (data) => {
+  const handleRegisterFunc = async (data) => {
     // e.preventDefault();
     // const email = e.target.email.value;
     // const password = e.target.password.value;
     console.log(data, "data");
-    const {email, name, photo, password} = data;
+    const { email, name, photo, password } = data;
     console.log(name, photo);
+
+    const {data: res, error} = await authClient.signUp.email({
+      name: name, // required
+      email: email, // required
+      password: password, // required
+      image: photo,
+      callbackURL: "/",
+    });
+
+    console.log(res, error);
+
+    if(error){
+      alert(error.message)
+    }
+
+    if(res) {
+      alert("Signup successful")
+    }
   };
 
   return (
@@ -50,9 +69,11 @@ const RegisterPage = () => {
               className="input bg-gray-100"
               // name="email"
               placeholder="Enter your photo url"
-              {...register("photo", {required: "Photo field is required"})}
+              {...register("photo", { required: "Photo field is required" })}
             />
-            {errors.photo && <p className="text-red-500">{errors.photo.message}</p>}
+            {errors.photo && (
+              <p className="text-red-500">{errors.photo.message}</p>
+            )}
           </fieldset>
 
           {/* Email */}

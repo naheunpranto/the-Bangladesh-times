@@ -4,11 +4,24 @@ import Link from "next/link";
 import { CiBookmark, CiShare2, CiStar } from "react-icons/ci";
 import { FaEye } from "react-icons/fa";
 
-const NewsDetailsPage = async ({ params }) => {
-  const { id } = await params;
+export const generateMetadata = async ({params}) => {
+  const {id} = await params;
   console.log(id, "params");
   const news = await getNewsDetailsById(id);
   console.log(news, "news");
+
+  return {
+    title: news.title,
+    description: news.details,
+  }
+}
+
+
+const NewsDetailsPage = async ({ params }) => {
+  const { id } = await params;
+  // console.log(id, "params");
+  const news = await getNewsDetailsById(id);
+  // console.log(news, "news");
   return (
     <div className="max-w-5xl mx-auto my-8">
       <h2 className="mb-5">News Details page</h2>

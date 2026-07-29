@@ -54,7 +54,7 @@ const LoginPage = () => {
         </form>
 
         <p className="mt-4">
-          Don't have an account?{" "}
+          Do not have an account?{" "}
           <Link className="text-blue-500" href={"/register"}>
             Register
           </Link>
